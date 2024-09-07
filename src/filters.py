@@ -3,7 +3,7 @@ def count_words(title):
 
 def filter_more_than_five_words(entries):
     return sorted(
-        [entry for entry in entries if count_words(entry['title'])] > 5,
+        [entry for entry in entries if count_words(entry['title']) > 5],
         key=lambda x: x['comments'],
         reverse=True
     )
