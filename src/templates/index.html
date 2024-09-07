@@ -39,10 +39,10 @@
     <div id="results"></div>
 
     <script>
-        function displayEntries(entries){
+        function displayEntries(entries) {
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = '';
-            if (entries.length === 0){
+            if (entries.length === 0) {
                 resultsDiv.innerHTML = '<p>No entries found.</p>';
                 return;
             }
@@ -55,19 +55,19 @@
                     <p>Points: ${entry.points}</p>
                     <p>Comments: ${entry.comments}</p>
                 `;
-            resultsDiv.appendChild(entryDiv);
+                resultsDiv.appendChild(entryDiv);
             });
         }
 
-        function showError(){
+        function showError() {
             const errorDiv = document.getElementById('error')
             errorDiv.textContent = message;
         }
-        function clearError(){
+        function clearError() {
             const errorDiv = document.getElementById('error')
             errorDiv.textContent = '';
         }
-        function makeRequest(url){
+        function makeRequest(url) {
             clearError();
             axios.get(url)
                 .then(response => {
