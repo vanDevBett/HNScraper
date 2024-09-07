@@ -12,16 +12,16 @@ def index():
 
 @app.route('/scrape')
 def scrape():
-        try:
-            scraper = HNScraper()
-            entries = scraper.scrape()
-            if not entries:
-                logging.warning("No entries returned from scraper")
-                return jsonify({"error": "No entries found"}), 404
-            return jsonify(entries)
-        except Exception as e:
-             logging.error(f"Error in /scrape route: {e}")
-             return jsonify({"error": str(e)}), 500
+    try:
+        scraper = HNScraper()
+        entries = scraper.scrape()
+        if not entries:
+            logging.warning("No entries returned from scraper")
+            return jsonify({"error": "No entries found"}), 404
+        return jsonify(entries)
+    except Exception as e:
+            logging.error(f"Error in /scrape route: {e}")
+            return jsonify({"error": str(e)}), 500
 
 @app.route('/filter/more_than_five')
 def filter_more():
