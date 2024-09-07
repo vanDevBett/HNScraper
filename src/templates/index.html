@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HN Scraper</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #results, #error {
+            margin-top: 20px;
+        }
+        .entry {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>HN Scraper</h1>
+    <button onclick="scrape()">Scrape HN</button>
+    <button onclick="filterMoreThanFive()">Filter > 5 words</button>
+    <button onclick="filterFiveOrLess()">Filter ≤ 5 words</button>
+    <div id="error"></div>
+    <div id="results"></div>
+
+    <script>
+        function displayEntries(entries){
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            if (entries.length === 0){
+                resultsDiv.innerHTML = '<p>No entries found.</p>';
+                return;
+            }
+            entries.forEach(entry => {
+                const entryDiv = document.createElement('div');
+                entryDiv.className = 'entry';
+                entryDiv.innerHTML = `
+                    <h3>${entry.title}</h3>
+                    <p>Rank: ${entry.rank}</p>
+                    <p>Points: ${entry.points}</p>
+                    <p>Comments: ${entry.comments}</p>
+                `;
+            resultsDiv.appendChild(entryDiv);
+            });
+        }
+
+        function showError(){
+            const errorDiv = document.getElementById('error')
+            errorDiv.textContent = message;
+        }
+        function clearError(){
+            const errorDiv = document.getElementById('error')
+            errorDiv.textContent = '';
+        }
+        function makeRequest(url){
+            clearError();
+            axios.get(url)
+                .then(response => {
+                    console.log('Response: ', response.data);
+                    if (Array.isArray(response.data)) {
+                        displayEntries(response.data);
+                    }else {
+                        showError('Unespected response format');
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error', error);
+                    showError('An error ocurred: ' + error.message);
+                });
+        }
+        function scrape(){
+            makeRequest('/scrape');
+        }
+        function filterMoreThanFive() {
+            makeRequest('/filter/more_than_five');
+        }
+        function filterFiveOrLess() {
+            makeRequest('/filter/five_or_less');
+        }
+
+    </script>
+</body>
+</html>
