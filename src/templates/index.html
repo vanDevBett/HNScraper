@@ -60,40 +60,43 @@
         }
 
         function showError(message) {
-            const errorDiv = document.getElementById('error')
+            const errorDiv = document.getElementById('error');
             errorDiv.textContent = message;
         }
+
         function clearError() {
-            const errorDiv = document.getElementById('error')
+            const errorDiv = document.getElementById('error');
             errorDiv.textContent = '';
         }
+
         function makeRequest(url) {
             clearError();
             axios.get(url)
                 .then(response => {
-                    console.log('Response: ', response.data);
+                    console.log('Response:', response.data);
                     if (Array.isArray(response.data)) {
                         displayEntries(response.data);
-                    }else {
-                        showError('Unespected response format');
+                    } else {
+                        showError('Unexpected response format');
                     }
-
                 })
                 .catch(error => {
-                    console.error('Error', error);
-                    showError('An error ocurred: ' + error.message);
+                    console.error('Error:', error);
+                    showError('An error occurred: ' + error.message);
                 });
         }
-        function scrape(){
+
+        function scrape() {
             makeRequest('/scrape');
         }
+
         function filterMoreThanFive() {
             makeRequest('/filter/more_than_five');
         }
+
         function filterFiveOrLess() {
             makeRequest('/filter/five_or_less');
         }
-
     </script>
 </body>
 </html>
