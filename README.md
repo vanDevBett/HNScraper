@@ -12,7 +12,7 @@ This project is a web crawler that scrapes the first 30 entries from Hacker News
 ## Installation
 
 1. Clone the repository:
-git clone https://github.com/yourusername/hn-scraper.git
+git clone https://github.com/vanDevBett/HNScraper.git
 cd hn-scraper
 
 2. Create a virtual environment and activate it:
